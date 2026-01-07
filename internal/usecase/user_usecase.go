@@ -1,10 +1,10 @@
 package usecase
 
 import (
-	"github.com/rsmnarts/codebase-golang-backend/internal/domain"
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/rsmnarts/codebase-golang-backend/internal/domain"
 )
 
 // UserUseCase handles user business logic

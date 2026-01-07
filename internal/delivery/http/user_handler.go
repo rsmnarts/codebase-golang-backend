@@ -20,14 +20,15 @@ func NewUserHandler(userUseCase *usecase.UserUseCase) *UserHandler {
 
 // CreateUserRequest represents the request body for creating a user
 type CreateUserRequest struct {
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	Name  string `json:"name" validate:"required"`
+	Email string `json:"email" validate:"required,email"`
 }
 
 // UpdateUserRequest represents the request body for updating a user
+// Uses pointer types to distinguish between empty strings and unset values
 type UpdateUserRequest struct {
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	Name  *string `json:"name,omitempty"`
+	Email *string `json:"email,omitempty"`
 }
 
 // CreateUser handles POST /users
@@ -96,7 +97,17 @@ func (h *UserHandler) UpdateUser(c *fiber.Ctx) error {
 		})
 	}
 
-	user, err := h.userUseCase.UpdateUser(id, req.Name, req.Email)
+	// Extract values from pointers, use empty string if nil
+	name := ""
+	email := ""
+	if req.Name != nil {
+		name = *req.Name
+	}
+	if req.Email != nil {
+		email = *req.Email
+	}
+
+	user, err := h.userUseCase.UpdateUser(id, name, email)
 	if err != nil {
 		if err == domain.ErrNotFound {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{

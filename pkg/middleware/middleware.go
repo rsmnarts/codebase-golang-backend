@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"os"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -15,9 +16,16 @@ func Setup(app *fiber.App) {
 	app.Use(recover.New())
 
 	// CORS middleware
+	// Configure allowed origins via ALLOWED_ORIGINS environment variable
+	// Default is "*" for development, but should be restricted in production
+	allowedOrigins := os.Getenv("ALLOWED_ORIGINS")
+	if allowedOrigins == "" {
+		allowedOrigins = "*"
+	}
+
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "*",
-		AllowHeaders: "Origin, Content-Type, Accept",
+		AllowOrigins: allowedOrigins,
+		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 		AllowMethods: "GET, POST, PUT, DELETE, OPTIONS",
 	}))
 
