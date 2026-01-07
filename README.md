@@ -76,6 +76,11 @@ go mod download
 go run cmd/api/main.go
 ```
 
+Or using Make:
+```bash
+make run
+```
+
 The server will start on `http://localhost:8080`
 
 ### Docker Setup
@@ -182,6 +187,21 @@ Dependencies flow inward: `Delivery -> Use Case -> Domain`
 - Domain layer has no dependencies
 - Use Case layer depends only on Domain
 - Delivery and Infrastructure layers depend on Use Case and Domain
+
+## 🛠️ Development Commands
+
+The project includes a Makefile for common development tasks:
+
+```bash
+make help          # Show all available commands
+make build         # Build the application
+make run           # Run the application
+make test          # Run tests
+make clean         # Remove build artifacts
+make docker-build  # Build Docker image
+make docker-run    # Run Docker container
+make lint          # Run linters (fmt + vet)
+```
 
 ## 🔄 Extending the Application
 
