@@ -3,7 +3,7 @@ module github.com/rsmnarts/codebase-golang-backend
 go 1.21
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.10
+	github.com/gofiber/fiber/v2 v2.52.13
 	github.com/google/uuid v1.6.0
 )
 
